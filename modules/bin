@@ -1,0 +1,12 @@
+# Подключаешь файл с функцией
+source ./select_menu.sh
+
+# Собираешь массив дисков
+mapfile -t disks < <(lsblk -d -n -o NAME,SIZE,MODEL | grep -E "sd|nvme")
+#mapfile -t disks < <(ls -la /usr/bin) 
+# Вызываешь функцию, просто передавая массив
+select_menu "${disks[@]}"
+
+# Результат уже лежит в переменной REPLY
+echo "Выбрано: $REPLY"
+
